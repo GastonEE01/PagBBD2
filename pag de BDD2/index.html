@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./CSS/estilo.css">
+  <title>Secciones con colores personalizables</title>
+ 
+  <h1 style="text-align: center;">BASE DE DATOS 2</h1>
+   
+</head>
+ <div class="botonera">
+    <a href="index.html"><input type="button" value="Teoría"></a>
+    <a href="index2.html"><input type="button" value="Parciales"></a>
+  </div>
+<body>
+       
+
+  <!--SECCION TEORIA Y REPASO BDD-->
+  <section id="RepasoBDD">
+    <h2>Sección 1</h2>
+    <p>Contenido de la sección 1.</p>
+    <article>
+    <h2 class="h2Centrado">BASE DE DATOS:</h2>
+<h4>CREAR BASE DE DATOS (CREATE DATABASE)</h4>
+<pre>
+                CREATE DATABASE test;
+            </pre>
+<h4>ELIMINAR BASE DE DATOS (DROP DATABASE)</h4>
+<pre>
+                DROP DATABASE test;
+            </pre>
+<h2>Estructura de datos</h2>
+<h4>INSERTAR EN UNA TABLA (INSERT INTO)</h4>
+<pre>
+                INSERT INTO usuarios (usuario_id, nombre, apellido) 
+                VALUES (8, 'María', 'López');
+            </pre>
+<h4>ACTUALIZAR TABLA (UPDATE)</h4>
+<pre>
+                UPDATE usuarios SET edad = '21' WHERE usuario_id = 4;
+                UPDATE usuarios SET edad = '20', init_date = '2020-10-12' WHERE usuario_id = 1;
+            </pre>
+<h4>ELIMINAR DE UNA TABLA (DELETE)</h4>
+<pre>
+                DELETE FROM usuarios WHERE usuario_id = 6;
+            </pre>
+<h2>TABLAS</h2>
+<h4>CREAR UNA TABLA (CREATE TABLE)</h4>
+<pre>
+                CREATE TABLE persona (
+                    id_persona INT PRIMARY KEY,
+                    nombre VARCHAR(100),
+                    apellido VARCHAR(100),
+                    FOREIGN KEY (id_persona) REFERENCES usuarios(usuario_id)
+                );
+            </pre>
+<h4>CAMBIAR UNA TABLA (ALTER TABLE)</h4>
+<pre>
+                ALTER TABLE persona
+                MODIFY COLUMN nombre VARCHAR(250); -- Cambiar el tipo de datos de un campo
+                RENAME COLUMN apellido TO descripcion; -- Cambiar el nombre de un campo
+                ADD COLUMN idpersona INT NOT NULL PRIMARY KEY; -- Agregar un nuevo campo
+            </pre>
+<h4>ELIMINAR UNA TABLA (DROP TABLE)</h4>
+<pre>
+                DROP TABLE persona;
+                DROP COLUMN descripcion;
+            </pre>
+
+  <h4>SINTAXIS</h4>
+<pre>
+                SELECT listaCampos
+                [ INTO nuevaTabla ]
+                FROM tablaOrigen
+                [ WHERE condicionFiltro ]
+                [ GROUP BY campoGrupo ]
+                [ HAVING filtroGrupo ]
+                [ ORDER BY campo/s [ ASC | DESC ] ]
+            </pre>
+    </article>
+<article>
+<!-- Sección de Parciales -->
+<div class="subbloque" id="RepasoBDD" style="display: none;">
+<h2>Consultas en SQL:</h2>
+<h4>INNER JOIN</h4>
+<pre>
+                SELECT * FROM users
+                INNER JOIN dni
+                ON users.user_id = dni.user_id;
+            </pre>
+<h5>Resultado de INNER JOIN</h5>
+<table>
+<thead>
+<tr>
+<th>User ID</th>
+<th>Nombre</th>
+<th>DNI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Juan Pérez</td>
+<td>12345678</td>
+</tr>
+<tr>
+<td>2</td>
+<td>María López</td>
+<td>87654321</td>
+</tr>
+</tbody>
+</table>
+<h4>LEFT JOIN</h4>
+<pre>
+                SELECT * FROM users
+                LEFT JOIN dni
+                ON users.user_id = dni.user_id;
+            </pre>
+<h5>Resultado de LEFT JOIN</h5>
+<table>
+<thead>
+<tr>
+<th>User ID</th>
+<th>Nombre</th>
+<th>DNI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Juan Pérez</td>
+<td>12345678</td>
+</tr>
+<tr>
+<td>2</td>
+<td>María López</td>
+<td>87654321</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Pedro García</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="RepasoBDD" id="">
+<h2>SELECT</h2>
+<p>Permite seleccionar columnas específicas de una tabla.</p>
+<pre>SELECT nombre, edad FROM Personas;</pre>
+<h2>LIKE</h2>
+<p>Busca coincidencias con patrones de texto usando comodines:</p>
+<ul>
+<li><code>%</code> coincide con varios caracteres</li>
+<li><code>_</code> coincide con un solo carácter</li>
+</ul>
+<pre>SELECT * FROM Productos WHERE nombre LIKE 'C%';</pre>
+<table class="tablaLike">
+<thead>
+<tr>
+<th>Tipo de coincidencia</th>
+<th>Modelo</th>
+<th>Coincide</th>
+<th>No coincide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Varios caracteres</td>
+<td>'a%a'</td>
+<td>'aa', 'aBa', 'aBXBa'</td>
+<td>'aBC'</td>
+</tr>
+<tr>
+<td>Varios caracteres</td>
+<td>'ab%'</td>
+<td>'abcdefg', 'abc'</td>
+<td>'cab', 'aab'</td>
+</tr>
+<tr>
+<td>Un solo carácter</td>
+<td>'a_a'</td>
+<td>'aaa', 'a3a', 'aBa'</td>
+<td>'aBBBa'</td>
+</tr>
+<tr>
+<td>Un solo dígito</td>
+<td>'a[0-9]a'</td>
+<td>'a0a', 'a1a', 'a2a'</td>
+<td>'aaa', 'a10a'</td>
+</tr>
+<tr>
+<td>Rango de caracteres</td>
+<td>'[a-z]'</td>
+<td>'f', 'p', 'j'</td>
+<td>'2', '&amp;'</td>
+</tr>
+<tr>
+<td>Fuera de un rango</td>
+<td>'[^a-z]'</td>
+<td>'9', '&amp;', '%'</td>
+<td>'b', 'a'</td>
+</tr>
+<tr>
+<td>Distinto de un dígito</td>
+<td>'[!0-9]'</td>
+<td>'A', 'a', '&amp;', '~'</td>
+<td>'0', '1', '9'</td>
+</tr>
+<tr>
+<td>Combinada</td>
+<td>'a[^b-m]#'</td>
+<td>'An9', 'az0', 'a99'</td>
+<td>'abc', 'aj0'</td>
+</tr>
+</tbody>
+</table>
+<h2>BETWEEN</h2>
+<p>El operador BETWEEN se utiliza para filtrar valores dentro de un rango determinado (inclusive). Funciona con números, fechas o texto.</p>
+<pre>
+  SELECT * FROM tabla
+  WHERE columna BETWEEN valor1 AND valor2;
+</pre>
+<h2>BACKUP Y RESTORE</h2>
+<p>Son operaciones de mantenimiento o administración de bases de datos,backup hace una copia de seguridad de la base de datos para proteger los datos
+  y restore restaura una base de datos a partir de un backup previo.
+</p>
+<pre>
+  SELECT * FROM tabla
+  WHERE columna BETWEEN valor1 AND valor2;
+</pre>
+<h2 class="h2Centrado">Funciones de Agregado</h2>
+<p>Operan sobre conjuntos de datos:</p>
+<h2>COUNT</h2>
+<pre>SELECT COUNT(*) FROM Empleados;
+    SELECT AVG(salario) FROM Empleados;</pre>
+<h2>GROUP BY</h2>
+<p>Agrupa datos para usarlos con funciones de agregado.</p>
+<pre>SELECT departamento, AVG(salario) 
+    FROM Empleados 
+    GROUP BY departamento;</pre>
+<h2>HAVING</h2>
+<p>Filtra resultados después de agrupar.</p>
+<pre>SELECT departamento, AVG(salario)
+    FROM Empleados
+    GROUP BY departamento
+    HAVING AVG(salario) &gt; 50000;</pre>
+<h2>DISTINCT</h2>
+<p>Elimina duplicados en los resultados.</p>
+<pre>SELECT DISTINCT ciudad FROM Clientes;</pre>
+<h2>TOP</h2>
+<p>Limita la cantidad de resultados.</p>
+<pre>SELECT TOP 5 * FROM Productos ORDER BY precio DESC;</pre>
+</div>
+
+<h2>CASE</h2>
+<pre>SELECT 
+  nombre,
+  CASE 
+    WHEN edad >= 18 THEN 'Adulto'
+    ELSE 'Menor'
+  END AS tipoPersona
+FROM Persona;
+</pre>
+</div>
+<h2 class="h2Centrado">BUCLES</h2>
+<p>IF, WHILE, FOR: se usan dentro de procedimientos almacenados (Stored Procedures)</p>
+<h2>IF</h2>
+<pre>
+  DECLARE @edad INT = 20;
+
+IF @edad >= 18
+   PRINT 'Es mayor';
+ELSE
+   PRINT 'Es menor';
+</pre>
+</div>
+<h2>WHILE</h2>
+<pre>
+  DECLARE @contador INT = 1;
+
+WHILE @contador <= 5
+BEGIN
+   PRINT 'Contador: ' + CAST(@contador AS VARCHAR);
+   SET @contador = @contador + 1;
+END
+</pre>
+<h2>FOR</h2>
+<p>No existe como palabra clave, pero se puede lograr algo similar con cursores:
+</p>
+<pre>
+DECLARE cursor_libros CURSOR FOR
+SELECT titulo FROM Libro;
+
+OPEN cursor_libros;
+FETCH NEXT FROM cursor_libros INTO @titulo;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+   PRINT @titulo;
+   FETCH NEXT FROM cursor_libros INTO @titulo;
+END
+
+CLOSE cursor_libros;
+DEALLOCATE cursor_libros;
+
+</pre>
+
+</article>
+
+<article>
+<h2 class="h2Centrado">Tipos de JOIN en SQL</h2> 
+<h2 class="centered">Ejemplos concretos de JOIN en SQL</h2>
+<p style="max-width: 800px; margin: auto; text-align: justify;">
+        Vamos a trabajar con estas dos tablas de ejemplo:
+      </p>
+<div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; flex-wrap: wrap;">
+<div>
+<h4>Tabla <code>Empleados</code></h4>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; background-color: #fff;">
+<tr>
+<th>idEmpleado</th>
+<th>nombre</th>
+<th>idDepto</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Ana</td>
+<td>10</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Luis</td>
+<td>20</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Marta</td>
+<td>NULL</td>
+</tr>
+</table>
+</div>
+<div>
+<h4>Tabla <code>Departamentos</code></h4>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; background-color: #fff;">
+<tr>
+<th>idDepto</th>
+<th>nombreDepto</th>
+</tr>
+<tr>
+<td>10</td>
+<td>Finanzas</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Marketing</td>
+</tr>
+<tr>
+<td>30</td>
+<td>IT</td>
+</tr>
+</table>
+</div>
+</div>
+<h3 style="margin-top: 2rem; text-align: center;">Resultados según tipo de JOIN</h3>
+<table border="1" cellpadding="8" cellspacing="0" style="width: 100%; max-width: 1000px; margin: 2rem auto; border-collapse: collapse; background-color: #fff;">
+<thead style="background-color: #333; color: #fff;">
+<tr>
+<th>JOIN</th>
+<th>Consulta</th>
+<th>Resultado esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>INNER JOIN</strong></td>
+<td>
+<code>SELECT e.nombre, d.nombreDepto FROM Empleados e INNER JOIN Departamentos d ON e.idDepto = d.idDepto;</code>
+</td>
+<td>
+              Ana - Finanzas<br/>
+              Luis - Marketing
+            </td>
+</tr>
+<tr>
+<td><strong>LEFT JOIN</strong></td>
+<td>
+<code>SELECT e.nombre, d.nombreDepto FROM Empleados e LEFT JOIN Departamentos d ON e.idDepto = d.idDepto;</code>
+</td>
+<td>
+              Ana - Finanzas<br/>
+              Luis - Marketing<br/>
+              Marta - NULL
+            </td>
+</tr>
+<tr>
+<td><strong>RIGHT JOIN</strong></td>
+<td>
+<code>SELECT e.nombre, d.nombreDepto FROM Empleados e RIGHT JOIN Departamentos d ON e.idDepto = d.idDepto;</code>
+</td>
+<td>
+              Ana - Finanzas<br/>
+              Luis - Marketing<br/>
+              NULL - IT
+            </td>
+</tr>
+<tr>
+<td><strong>FULL JOIN</strong></td>
+<td>
+<code>SELECT e.nombre, d.nombreDepto FROM Empleados e FULL JOIN Departamentos d ON e.idDepto = d.idDepto;</code>
+</td>
+<td>
+              Ana - Finanzas<br/>
+              Luis - Marketing<br/>
+              Marta - NULL<br/>
+              NULL - IT
+            </td>
+</tr>
+<tr>
+<td><strong>CROSS JOIN</strong></td>
+<td><code>SELECT e.nombre, d.nombreDepto FROM Empleados e CROSS JOIN Departamentos d;</code></td>
+<td>
+              Ana - Finanzas<br/>
+              Ana - Marketing<br/>
+              Ana - IT<br/>
+              Luis - Finanzas<br/>
+              Luis - Marketing<br/>
+              Luis - IT<br/>
+              Marta - Finanzas<br/>
+              Marta - Marketing<br/>
+              Marta - IT
+            </td>
+</tr>
+</tbody>
+</table>
+</article>
+<article style="margin-bottom: 2rem;">
+  <h2 class="h2Centrado">¿Qué hace cada tipo de JOIN?</h2>
+<h3 style="color: #0d47a1;">✅ INNER JOIN</h3>
+<p>Trae solo los registros que <strong>coinciden en ambas tablas</strong>.</p>
+<p><em>Ejemplo:</em> Empleados con un departamento válido existente.</p>
+
+<h3 style="color: #0d47a1;">👈 LEFT JOIN</h3>
+<p>Trae <strong>todos los registros de la tabla izquierda</strong>, aunque no tengan coincidencia en la
+            derecha.</p>
+<p><em>Ejemplo:</em> Todos los empleados, incluso los que no tienen departamento (depto será
+            <code>NULL</code>).</p>
+
+<h3 style="color: #0d47a1;">👉 RIGHT JOIN</h3>
+<p>Trae <strong>todos los registros de la tabla derecha</strong>, aunque no tengan coincidencia en la
+            izquierda.</p>
+<p><em>Ejemplo:</em> Todos los departamentos, incluso los que no tienen empleados.</p>
+<h3 style="color: #0d47a1;">🔄 FULL JOIN</h3>
+<p>Une <strong>todo de ambas tablas</strong>. Si no hay coincidencia, muestra <code>NULL</code> en lo que
+            falta.</p>
+<p><em>Ejemplo:</em> Empleados y departamentos, aunque no estén relacionados.</p>
+<h3 style="color: #0d47a1;">🔢 CROSS JOIN</h3>
+<p>Crea <strong>todas las combinaciones posibles</strong> entre las filas de ambas tablas.</p>
+<p><em>Ejemplo:</em> 3 empleados y 3 departamentos = 9 combinaciones posibles.</p>
+
+  <img alt="" src="https://i.postimg.cc/3JBgndbc/Chat-GPT-Image-4-may-2025-03-01-06.png" style="display: block; margin: 0 auto;"/>
+</article>
+
+<article class="articuloSQLServer">
+  <h2 class="h2Centrado">Introducción a SQL Server
+</h2>
+  <p style="max-width: 900px; margin: auto; text-align: justify; color: #333;">
+<strong>SQL Server</strong> es un sistema de gestión de bases de datos relacional (RDBMS) desarrollado por
+        Microsoft.
+        Se utiliza para almacenar y recuperar datos cuando lo requieren otras aplicaciones, ya sea en un entorno local o
+        en la nube.
+      </p>
+<ul style="max-width: 900px; margin: 1.5rem auto; color: #444; line-height: 1.6;">
+<li><strong>Lenguaje:</strong> Utiliza T-SQL (Transact-SQL), una extensión de SQL estándar.</li>
+<li><strong>Componentes principales:</strong>
+<ul>
+<li><strong>Motor de base de datos:</strong> Procesa solicitudes de datos.</li>
+<li><strong>Herramientas de administración:</strong> SQL Server Management Studio (SSMS).</li>
+<li><strong>Servicios adicionales:</strong> Reporting Services (SSRS), Integration Services (SSIS), Analysis
+              Services (SSAS).</li>
+</ul>
+</li>
+<li><strong>Ventajas:</strong> Alta seguridad, escalabilidad, integración con el ecosistema de Microsoft.</li>
+<li><strong>Versiones:</strong> Express, Standard, Enterprise, Developer (gratuita para pruebas).</li>
+</ul>
+<p style="max-width: 900px; margin: auto; text-align: justify; color: #333;">
+        Es ideal para aplicaciones empresariales que requieren gestión robusta de datos, consultas avanzadas, y
+        funcionalidades como transacciones, seguridad y replicación.
+      </p>
+
+
+<article>
+  <h2 class="h2Centrado">¿ QUE ES UN MOTOR DE BD?</h2>
+  <p style="max-width: 900px; margin: auto; text-align: justify; color: #333;">
+<strong>Motor de BDD </strong>es el componente principal que se instala como un servicio en sistemas operativos para almacenar, 
+procesar y proteger los datos.
+Proporciona acceso controlado y procesamiento
+rápido de transacciones para cumplir los
+requisitos de las aplicaciones consumidoras
+de datos más exigentes de la empresa.
+      </p>
+  <h2 class="h2Centrado">¿Qué es Transact-SQL (T-SQL)?</h2>
+  <p style="max-width: 900px; margin: auto; text-align: justify; color: #333;">
+<strong>Transact-SQL (T-SQL)</strong> es una extensión del lenguaje SQL estándar (ANSI SQL) desarrollada por
+        Microsoft para SQL Server.
+        Permite realizar consultas y administrar datos, pero también incluye características adicionales como:
+      </p>
+<ul style="max-width: 900px; margin: 1rem auto; color: #444; line-height: 1.6;">
+<li>Uso de <strong>variables</strong> y estructuras de control (<code>IF</code>, <code>WHILE</code>).</li>
+<li>Creación de <strong>procedimientos almacenados</strong>, funciones y triggers.</li>
+<li>Control de errores con <code>TRY...CATCH</code>.</li>
+</ul>
+<p style="max-width: 900px; margin: auto; text-align: justify;">
+        Es el lenguaje que el cliente usa para enviar instrucciones al servidor SQL Server. Solo está disponible para
+        este sistema.
+      </p>
+<pre style="max-width: 900px; margin: 2rem auto; background-color: #f4f4f4; padding: 1rem; overflow-x: auto;">
+              <code>
+          -- Ejemplo simple de T-SQL con variables
+          DECLARE @Nombre NVARCHAR(50)
+          SET @Nombre = 'Ana'
+          
+          SELECT * FROM Empleados WHERE nombre = @Nombre
+              </code>
+            </pre>
+  <h2 class="h2Centrado">Caracteristicas del SQL</h2>
+  <p>SQL proporciona dos tipos de sentencias diferentes:</p>
+  <h3>1.Especificar el esquema relacional: DDL(DATA DEFINITION LANGUAGE)</h3>
+  <p>
+    Las sentencias DDL permiten crear(CREATE), modificar(ALTER) y eliminar(DROP) objetos de la base de datos, como tablas, índices y Permisos(GRANT Y REVOKE)
+  </p>
+
+  <h3>2.Expresar las consultas y 
+actualizaciones de la base de datos:
+DML(DATA MANIPULATION LANGUAGE)</h3>
+<p>Permite la recuperación de información (SELECT),Inserción de nueva información
+(INSERT),modificación de información almacenada (UPDATE),Eliminación (borrado) de información existente (DELETE)</p>
+</article>
+<article>
+  <h2 class="h2Centrado">ENTIDAD</h2>
+  <p>
+    Una entidad es cualquier "objeto" discreto sobre el que se tiene información,cada ejemplar de una entidad se denomina instancia
+    y las entidades son modeladas en la base de datos como tablas.
+  </p>
+   <h2 class="h2Centrado">Relaciones y Claves Foráneas</h2>
+   <p style="max-width: 900px; margin: auto; text-align: justify; color: #333;">
+        En bases de datos relacionales, una <strong>relación</strong> define cómo se conectan los datos entre distintas
+        tablas. Las relaciones más comunes son:
+      </p>
+<ul style="max-width: 900px; margin: 1rem auto; line-height: 1.6;">
+<li><strong>Uno a uno:</strong> Un registro de una tabla se relaciona con un solo registro de otra.</li>
+<li><strong>Uno a muchos:</strong> Un registro de una tabla puede estar relacionado con varios registros de otra
+          (muy común).</li>
+<li><strong>Muchos a muchos:</strong> Requiere una tabla intermedia para unir ambas.</li>
+</ul>
+<p style="max-width: 900px; margin: auto;">
+        Una <strong>clave foránea</strong> (foreign key) es un campo que conecta dos tablas, asegurando la integridad
+        referencial.
+      </p>
+<pre style="max-width: 900px; margin: 2rem auto; background-color: #f9f9f9; padding: 1rem; overflow-x: auto;">
+              <code>
+          -- Crear tabla Departamentos
+          CREATE TABLE Departamentos (
+            idDepto INT PRIMARY KEY,
+            nombreDepto VARCHAR(50)
+          )
+          
+          -- Crear tabla Empleados con clave foránea
+          CREATE TABLE Empleados (
+            idEmpleado INT PRIMARY KEY,
+            nombre VARCHAR(50),
+            idDepto INT FOREIGN KEY REFERENCES Departamentos(idDepto)
+          )
+              </code>
+            </pre>
+    <h2 class="h2Centrado">RESTRICCIONES</h2>
+    <ul>
+      <li>Los nombres de las tablas deben ser únicos en la base de datos.</li>
+      <li>Los nombres de las columnas deben ser únicos en la tabla.</li>
+      <li>No puede haber dos registros con el mismo valor de la clave primaria.(Primary key – pk – clave principal)</li>
+    </ul>
+    <p>
+      Dentro de las restricciones que podemos establecer desde el diseño de los campos, además del tipo de datos son:
+      <br>
+      NO ADMITA VALORES NULOS
+      <br>
+      NO ADMITA VALORES DUPLICADOS
+    </p>
+    <h2 class="h2Centrado">ACCESO A LAS BASES DE DATOS</h2>
+    <p>
+      El acceso para trabajar con las bases de 
+datos, en nuestro caso sql sever, debemos, 
+ademas del motor, tener instalado un IDE para
+el manejo de los datos, nosotros tenemos 
+instalado el sql server managment studio
+express ( gratuito) para sencillas aplicaciones
+y educación.
+    </p>
+    <p>
+      Para acceder al motor de sql y sus bases de datos existen 2 maneras:
+    </p>
+    <ol>
+      <li>Con credenciales de Windows (S.O.): Este tipo de acceso se denomina “integrado con windows” o autenticacion de windows”, y no requiere usuario y password.</li>
+      <li>Con credenciales de sql server: Este tipo de acceso se denomina autenticación de sql server ”, y requiere un usuario de sql registrado y una contraseña. </li>
+    </ol>
+    <h2 class="h2Centrado">FORMAS NORMALES EN LAS BASES DE DATOS</h2>
+    <p>
+      La normalización de bases de datos es un proceso que consiste en designar y aplicar una serie de reglas a las relaciones obtenidas  tras el paso del modelo entidad-relación al modelo relacional.
+    </p>
+    <p>
+      Las bases de datos relacionales se normalizan para:
+    </p>
+    <ul>
+      <li>Evitar la redundancia de los datos.</li>
+      <li>Disminuir problemas de actualización de los datos en las tablas.</li>
+      <li>Proteger la integridad de los datos.</li> 
+    </ul>
+    <h2 class="h2">FORMAS NORMALES</h2>
+    <ul>
+      <li>Las formas normales son aplicadas a las tablas de una base de datos. Decir que una base de datos está en la forma normal N es decir que todas sus tablas están en la forma normal N.</li>
+      <li>Diagrama de inclusión de todas las formas normales.</li>
+      <li>En general, las primeras tres formas normales son suficientes para cubrir las necesidades de la mayoría de las bases de datos. El creador de estas 3 primeras formas normales (o reglas) fue Edgar F. Codd.</li>
+    </ul>
+    <h2>PRIMERA FORMA NORMAL (1FN)</h2>
+    <p>Se encuentra en 1FN si todo atributo contiene un valor indivisible o atomico (ausencia de grupos repetitivos).</p>
+    <img src="./IMG/intro sqlServer1.png" alt="" width="500px">
+    <img src="./IMG/intro sqlServer2.png" alt="" width="500px">
+    <h2>SEGUNDA FORMA NORMAL (2FN)</h2>
+    <p>Una tabla que está en la primera forma normal (1NF)
+debe satisfacer criterios adicionales para calificar para 
+la segunda forma normal. 
+
+Específicamente: una tabla 1NF está en 2NF si y solo si,
+dada una clave primaria y cualquier campo que no sea
+un constituyente de la clave primaria, el campo NO
+clave depende de toda la clave primaria y no solo de una parte.</p>
+    <img src="./IMG/intro sqlServer3.png" alt="" width="300px">
+  <h2>TERCERA FORMA NORMAL (3FN)</h2>
+  <p>
+     La definición de Codd indica que una tabla está en 
+3NF si y solo si las tres condiciones siguientes se
+cumplen:
+  </p>
+  <ul>
+    <li>La tabla está en la segunda forma normal (2NF)</li>
+    <li>Ningún atributo no clave depende de otro no clave (dependencia transitiva).</li>
+  </ul>
+    <img src="./IMG/intro sqlServer4.png" alt="" width="300px">
+    <img src="./IMG/intro sqlServer5.png" alt="" width="500px">
+
+
+</article>
+<article>
+  <h2 class="h2Centrado">Operadores Lógicos en SQL</h2>
+  <p style="max-width: 900px; margin: auto; text-align: justify;">
+        Los operadores lógicos se usan en la cláusula <code>WHERE</code> para combinar condiciones.
+      </p>
+<ul style="max-width: 900px; margin: 1rem auto; line-height: 1.6;">
+<li><strong>AND:</strong> Devuelve resultados si todas las condiciones son verdaderas.</li>
+<li><strong>OR:</strong> Devuelve resultados si alguna condición es verdadera.</li>
+<li><strong>IN:</strong> Verifica si un valor está en una lista.</li>
+</ul>
+<pre style="max-width: 900px; margin: 2rem auto; background-color: #f1f5f9; padding: 1rem; overflow-x: auto;">
+              <code>
+          -- Empleados que trabajan en los departamentos 1, 2 o 3
+          SELECT * FROM Empleados WHERE idDepto IN (1, 2, 3)
+          
+          -- Empleados que se llaman Ana y están en el depto 2
+          SELECT * FROM Empleados WHERE nombre = 'Ana' AND idDepto = 2
+          
+          -- Empleados que están en el depto 1 o se llaman Juan
+          SELECT * FROM Empleados WHERE idDepto = 1 OR nombre = 'Juan'
+              </code>
+            </pre>
+</article>
+<article>
+  <h2 class="h2Centrado">Funciones en SQL Server</h2>
+  <p style="max-width: 900px; margin: auto; text-align: justify;">
+        En SQL Server, una <strong>función</strong> es un bloque de código reutilizable que puede recibir parámetros y
+        devolver un valor. Se utilizan para realizar cálculos o transformar datos.
+      </p>
+<h3 style="color: #457b9d;">Tipos de funciones</h3>
+<ul style="max-width: 900px; margin: 1rem auto; line-height: 1.6;">
+<li><strong>Funciones escalares:</strong> Devuelven un solo valor (por ejemplo: fecha, número, texto).</li>
+<li><strong>Funciones de agregado:</strong> Operan sobre un conjunto de filas y devuelven un único valor.</li>
+<li><strong>Funciones de sistema:</strong> Incluidas por SQL Server para tareas comunes.</li>
+<li><strong>Funciones definidas por el usuario (UDF):</strong> Creadas por el usuario.</li>
+</ul>
+<h3 style="color: #457b9d;">Ejemplos comunes</h3>
+<pre style="max-width: 900px; margin: 2rem auto; background-color: #f9f9f9; padding: 1rem; overflow-x: auto;">
+              <code>
+          -- Función escalar: convierte a mayúsculas
+          SELECT UPPER('hola mundo') -- Resultado: HOLA MUNDO
+          
+          -- Función de fecha: día actual
+          SELECT GETDATE() -- Resultado: fecha y hora actual
+          
+          -- Función de agregado: suma total de sueldos
+          SELECT SUM(sueldo) FROM Empleados
+          
+          -- Función definida por el usuario (ejemplo simple)
+          CREATE FUNCTION dbo.SumarDosNumeros (@a INT, @b INT)
+          RETURNS INT
+          AS
+          BEGIN
+            RETURN @a + @b
+          END
+          
+          -- Uso de función definida por el usuario
+          SELECT dbo.SumarDosNumeros(5, 3) -- Resultado: 8
+              </code>
+            </pre>
+<p style="max-width: 900px; margin: auto; text-align: justify;">
+        Las funciones son muy útiles para reutilizar lógica, realizar cálculos personalizados o limpiar datos dentro de
+        consultas SQL.
+      </p>
+</article>
+</section> <!--FIN DEL REPASO -->
+
+
+<!--FUNCIONES AVANZADAS-->
+  <section id="FuncionesAvanzadas" >
+    <h2>Sección 2</h2>
+    <p>Contenido de la sección 2.</p>
+    <h2 class="h2Centrado">Funciones avanzadas en SQL Server</h2>
+    <p style="max-width: 900px; margin: auto; text-align: justify;">
+        En SQL Server existen diferentes tipos de funciones que permiten trabajar con números, fechas, cadenas y datos
+        agrupados. A continuación, se detallan las más usadas con ejemplos.
+      </p>
+
+      <h3 style="color: #606c38;">🔢 Funciones de agregado (devuelven un valor a partir de muchas filas)</h3>
+      <ul style="line-height: 1.6;">
+        <li><strong>COUNT:</strong> Cuenta la cantidad de filas.<br>
+          <code>SELECT COUNT(*) FROM Empleados;</code>
+        </li>
+        <li><strong>SUM:</strong> Suma los valores de una columna.<br>
+          <code>SELECT SUM(Sueldo) FROM Empleados;</code>
+        </li>
+        <li><strong>MIN / MAX:</strong> Mínimo o máximo valor.<br>
+          <code>SELECT MIN(Edad), MAX(Edad) FROM Empleados;</code>
+        </li>
+        <li><strong>AVG :</strong> Se utiliza para obtener el valor promedio de una columna numérica.<br>
+          <code>SELECT AVG(edad) FROM Empleados;
+</code>
+        </li>
+      </ul>
+
+      <h3 style="color: #606c38;">📅 Conversión de tipos (funciones escalares)</h3>
+      <ul>
+        <li><strong>CAST:</strong> Convierte de un tipo a otro.<br>
+          <code>SELECT CAST(GETDATE() AS VARCHAR);</code>
+        </li>
+        <li><strong>DECLARE:</strong> Se usa para declarar variables en SQL.<br>
+          <code>DECLARE @dato VARCHAR(2), @dato2 INT;</code>
+        </li>
+      </ul>
+
+      <section>
+        <h2>📅 Funciones de Fecha y Hora (SQL Server)</h2>
+
+        <p>Estas funciones forman parte de las <strong>funciones escalares</strong>, ya que devuelven un solo valor.
+          Permiten trabajar con fechas, extraer partes de ellas, modificarlas o convertirlas a texto.</p>
+
+        <h3>✅ Obtener la fecha y hora actual</h3>
+        <ul>
+          <li><code>GETDATE()</code>: Devuelve la fecha y hora actual del sistema.<br>
+            <code>SELECT GETDATE();</code>
+          </li>
+          <li><code>SYSDATETIME()</code>: Igual que GETDATE pero con mayor precisión.</li>
+          <li><code>CURRENT_TIMESTAMP</code>: Funciona igual que GETDATE (estándar ANSI).</li>
+          <li><code>GETUTCDATE()</code>: Devuelve la hora actual en formato UTC.</li>
+        </ul>
+
+        <h3>🕒 Extraer partes de una fecha</h3>
+        <ul>
+          <li><code>DAY(fecha)</code>: Devuelve el día del mes. <br><code>SELECT DAY(GETDATE());</code></li>
+          <li><code>MONTH(fecha)</code>: Devuelve el mes.</li>
+          <li><code>YEAR(fecha)</code>: Devuelve el año.</li>
+          <li><code>DATEPART(parte, fecha)</code>: Extrae una parte específica (día, hora, mes, etc).<br>
+            <code>SELECT DATEPART(hour, GETDATE());</code>
+          </li>
+        </ul>
+
+        <h3>🔄 Modificar fechas</h3>
+        <ul>
+          <li><code>DATEADD(parte, cantidad, fecha)</code>: Suma/resta a una fecha.<br>
+            <code>SELECT DATEADD(day, 7, GETDATE());</code> (suma 7 días)
+          </li>
+          <li><code>DATEDIFF(parte, fecha1, fecha2)</code>: Diferencia entre dos fechas.<br>
+            <code>SELECT DATEDIFF(day, '2025-01-01', GETDATE());</code>
+          </li>
+          <li><code>EOMONTH(fecha)</code>: Último día del mes.<br><code>SELECT EOMONTH(GETDATE());</code></li>
+        </ul>
+
+        <h3>🔁 Conversión de fecha a texto</h3>
+        <ul>
+          <li><code>CAST(valor AS tipo)</code>: Convierte el tipo de dato.<br>
+            <code>SELECT CAST(GETDATE() AS VARCHAR);</code>
+          </li>
+          <li><code>CONVERT(tipo, valor, estilo)</code>: Convierte con formato específico.<br>
+            <code>SELECT CONVERT(VARCHAR, GETDATE(), 103);</code> (formato dd/mm/yyyy)
+          </li>
+        </ul>
+
+        <h3>🧪 Ejemplo completo</h3>
+        <pre><code>
+            SELECT
+              GETDATE() AS FechaActual,
+              CAST(GETDATE() AS VARCHAR) AS FechaTexto,
+              YEAR(GETDATE()) AS Anio,
+              DATEADD(day, 30, GETDATE()) AS FechaEn30Dias,
+              DATEDIFF(day, '2025-01-01', GETDATE()) AS DiasDesdeInicioAno;
+              </code></pre>
+      </section>
+
+      <h3 style="color: #606c38;">🔠 Funciones de cadena (funciones escalares)</h3>
+      <p style="margin-top: 1rem;">Sirven para manipular texto. Estas son muy comunes:</p>
+      <ul style="line-height: 1.6;">
+        <li><strong>SUBSTRING(cadena, inicio, cantidad):</strong> Extrae parte del texto.<br>
+          <code>SELECT SUBSTRING('Hola Mundo', 1, 4); -- Resultado: Hola</code>
+        </li>
+        <li><strong>CHARINDEX(buscar, cadena[, inicio]):</strong> Devuelve la posición de un texto dentro de otro.<br>
+          <code>SELECT CHARINDEX('OM', 'Customer'); -- Resultado: 5</code>
+        </li>
+        <li><strong>PATINDEX(patrón, cadena):</strong> Similar a CHARINDEX pero acepta comodines.<br>
+          <code>SELECT PATINDEX('%mer%', 'Customer'); -- Resultado: 5</code>
+        </li>
+        <li><strong>LEFT(cadena, n):</strong> Devuelve los primeros n caracteres.<br>
+          <code>SELECT LEFT('Customer', 4); -- Resultado: Cust</code>
+        </li>
+        <li><strong>RIGHT(cadena, n):</strong> Devuelve los últimos n caracteres.<br>
+          <code>SELECT RIGHT('Customer', 2); -- Resultado: er</code>
+        </li>
+        <li><strong>LEN(cadena):</strong> Devuelve la longitud del texto.<br>
+          <code>SELECT LEN('Hola'); -- Resultado: 4</code>
+        </li>
+        <li><strong>REVERSE(cadena):</strong> Invierte el texto.<br>
+          <code>SELECT REVERSE('Hola'); -- Resultado: aloH</code>
+        </li>
+        <li><strong>LOWER(cadena):</strong> Convierte todo a minúsculas.<br>
+          <code>SELECT LOWER('HOLA ESTUDIAnte'); -- Resultado: hola estudiante</code>
+        </li>
+        <li><strong>UPPER(cadena):</strong> Convierte todo a mayúsculas.<br>
+          <code>SELECT UPPER('Hola'); -- Resultado: HOLA</code>
+        </li>
+        <li><strong>LTRIM(cadena):</strong> Quita espacios a la izquierda.<br>
+          <code>SELECT LTRIM(' Hola '); -- Resultado: 'Hola '</code>
+        </li>
+        <li><strong>RTRIM(cadena):</strong> Quita espacios a la derecha.<br>
+          <code>SELECT RTRIM(' Hola '); -- Resultado: ' Hola'</code>
+        </li>
+        <li><strong>REPLACE(cadena, buscar, reemplazo):</strong> Reemplaza partes del texto.<br>
+          <code>SELECT REPLACE('xxx.unlam.edu.ar','x','w'); -- Resultado: www.unlam.edu.ar</code>
+        </li>
+        <li><strong>REPLICATE(cadena, n):</strong> Repite una cadena varias veces.<br>
+          <code>SELECT REPLICATE('Hola ', 3); -- Resultado: Hola Hola Hola </code>
+        </li>
+        <li><strong>SPACE(n):</strong> Devuelve n espacios en blanco.<br>
+          <code>SELECT 'Hola' + SPACE(3) + 'Mundo'; -- Resultado: Hola   Mundo</code>
+        </li>
+      </ul>
+
+      <h3 style="color: #606c38;">📚 Clasificación de funciones</h3>
+      <ul style="line-height: 1.6;">
+        <li><strong>Funciones escalares:</strong> Devuelven un solo valor (ej: UPPER, LEN, GETDATE, CAST).</li>
+        <li><strong>Funciones de agregado:</strong> Operan sobre varias filas (ej: COUNT, SUM, AVG, MAX).</li>
+        <li><strong>Funciones de sistema:</strong> Ya vienen con SQL Server (ej: GETDATE, SCOPE_IDENTITY).</li>
+        <li><strong>Funciones definidas por el usuario (UDF):</strong> Creadas por vos o tu equipo.Son las que creamos para encapsular lógica que necesitamos aplicar.
+        Las funciones de SQL Server no pueden ser modificadas, las funciones definidas por el usuario si.</li>
+      </ul>
+      <h2>Ejemplo de funcion definida por el usuario</h2>
+      <img src="./IMG/FuncionesUsuario1.png" alt="">
+      <h2>Funciones de configuracion</h2>
+      <p>Son funciones que devuelven valores relacionados con la configuración del sistema, del usuario o de la sesión actual.</p>
+      <ul>
+         <li><strong>SELECT @@VERSION AS VersionSQL; -- Retorna la fecha, versión y tipo de procesador de SQL Server.</strong> Reemplaza partes del texto.<br></li>
+         <li><strong>SELECT DB_NAME() AS BaseDatosActual; -- Retorna la base de datos actual</strong></li>
+        <li><strong>SELECT HOST_NAME() AS Cliente; -- Retorna el nombre del equipo que se conecta</strong></li>
+      </ul>
+    </section> <!--FIN DE FUNCIONES AVANZADAS-->
+
+  <section id="CrearBDD">
+    <h2>Sección 3</h2>
+    <p>Contenido de la sección 3.</p>
+    <h2 class="h2Centrado">Dos categorías de aplicaciones de BD</h2>
+    <ul>
+        <li>Proceso de transacciones en línea(OLTP, Online Transaction Processing): Datos que cambian con frecuencia.
+          Estas aplicaciones cuentan normalmente con muchos usuarios que realizan transacciones al mismo tiempo que
+          cambian datos en tiempo real. Alto grado de normalización, dosificación de índices, ubicación correcta de los
+          datos y pocos datos históricos. </li>
+        <li>Ayuda a la toma de decisiones (OLAP, OnLine Analytical Processing): son óptimas para las consultas de datos
+          que no impliquen cambios frecuentes en los mismos. Poca normalización, muchos índices y datos preprocesados,.
+        </li>
+      </ul>
+      <h2 class="normal">Base de Datos de Sistema</h2>      <h2 class="centered">Master</h2>
+      <h2 class="normal">Tablas de sistema que realizan el seguimiento de la instalación del servidor y de todas las bases de datos que
+        se creen posteriormente. Controla las asignaciones de archivos, los parámetros de configuración que afectan al
+        sistema, las cuentas de inicio de sesión. </h2>      <h2 class="centered">Tempdb</h2>
+      <h2 class="normal">Temporal, fundamentalmente un espacio de trabajo, se regenera cada vez que arranca SQL Server. Se emplea para
+        las tablas temporales creadas explícitamente por los usuarios, para las tablas de trabajo intermedias de SQL
+        Server durante el procesamiento y la ordenación de las consultas.</h< /h2>        <h2 class="centered">Model</h2>
+        <h3>Se utiliza como plantilla para todas las bases de datoscreadas en un sistema. Cuando se ejecuta una
+          instrucción CREATE DATABASE, la primera parte de la base de datos se crea copiando el contenido de la base de
+          datos model, el resto de la nueva base de datos se llena con páginas vacías</h3>        <h2 class="centered">Msdb</h2>
+        <h3>Es empleada por los servicios SQL Server Agent, Database Mail, Service Broker, log shipping, etc. para
+          guardar información con respecto a tareas de automatización como por ejemplo copias de seguridad y tareas de
+          duplicación, asimismo solución a problemas</h3>        <h2 class="normal">Argumentos</h2>
+        <ul>
+          <li>Nombre_BaseDatos: Nombre lógico de la base de datos </li>
+          <li>ON: Especifica la información sobre el archivo de datos </li>
+          <li>LOG ON: Especifica la información sobre el archivo del registro de transacciones. </li>
+          <li>Collate: Establece el juego de caracteres soportados. </li>
+          <li>Primary: Especifica el grupo de archivos (filegroup) para este archivo. El grupo de archivo base del SQL
+            Server se llama Primary. </li>
+          <li>FileName: Nombre físico del archivo para el sistema operativo </li>
+          <li>Size: Tamaño inicial de la base de datos. Si no se especifica es de 1MB. </li>
+          <li>MaxSize: Tamaño máximo para la base de datos. Si no se especifica la base de datos puede crecer hasta
+            llenar el disco. </li>
+          <li>FileGrowth: Especifica el incremento de crecimiento de la base de datos </li>
+        </ul>        
+        <h2 class="h2Centrado">Opciones de BD </h2>
+        <ul>
+          <li>AUTO_CREATE_STATISTICS: Crea estadísticas en forma automática necesarias para la optimización de
+            consultas. El valor predeterminado es ON. </li>
+          <li>AUTO_UPDATE_STATISTICS: Actualiza automáticamente las estadísticas que están desactualizadas. El valor
+            predeterminado es ON. </li>
+          <li>AUTO_CLOSE; Si está en ON cierra la base de datos automáticamente cuando el último usuario cierra su
+            sesión. El valor predeterminado es OFF (excepto para la edición Express) </li>
+          <li>AUTO_SHRINK: Si está en ON la base de datos se encoge automáticamente en forma periódica. El valor
+            predeterminado es OFF. </li>
+          <li>READ_ONLY / READ_WRITE: Controla si los usuarios pueden modificar los datos. El valor predeterminado es
+            READ_WRITE. </li>
+          <li>SINGLE_USER / RESTRICTED_USER / MULTI_USER: SINGLE_USER, sólo se puede conectar un usuario a la base de
+            datos en un momento dado. RESTRICTED_USER, sólo pueden conectarse a la base de datos los miembros de la
+            función fija de base de datos db_owner y los de las funciones fijas de servidor dbcreator y sysadmin, pero
+            no se limita la cantidad de miembros. MULTI_USER, se permite el acceso de todos los usuarios que cuenten con
+            los permisos adecuados para conectarse a la base de datos. </li>
+          <li>RECOVERY MODEL: FULL / SIMPLE / BULK_LOGGED: El valor predeterminado es FULL. Provee un modelo de
+            recuperación completo ante fallas. BULK_LOGGED no usa el registro de transacciones para ese tipo de
+            movimiento. SIMPLE recupera la base de datos solo desde el último backup completo o diferencial. </li>
+          <li>PAGE_VERIFY: Permite detectar entradas de E/S incompletas. CHECKSUM: guarda un valor calculado en la
+            cabecera de la página basado en su contenido. Este valor es recalculado y comparado con los datos de la
+            página para controlarlas. </li>
+          <li>SQL ANSI_NULL_DEFAULT: Permite al usuario controlar el uso predeterminado del valor nulo de una columna al
+            crear o modificar una tabla. El valor predeterminado es OFF o sea NOT NULL. </li>
+          <li>ANSI_NULLS; Cuando está en ON, todas las comparaciones con nulos devuelven nulos. Si está en OFF solo
+            devuelve nulo si ambos valores son nulos. El valor predeterminado es OFF </li>
+          <li>QUOTED_IDENTIFIER: Cuando se especifica ON, se pueden utilizar comillas dobles para encerrar los
+            identificadores delimitados. Cuando se especifica OFF, los identificadores no pueden ir entre comillas y
+            deben adaptarse a todas las reglas de Transact-SQL que se aplican a los identificadores (Usar [] para
+            delimitar identificadores). </li>
+        </ul>        <h2 class="normal">Vistas del Catalogo</h2>
+        <h3>
+          Todos los metadatos del catálogo disponiblespara el usuario se exponen mediante las vistas de catálogo. Las
+          vistas de catálogo de SQL Server se han organizado en varias categorías.
+        </h3>
+
+        <ul>
+          <li>Vistas de catálogo de archivos y bases de datos: Por ejemplo:</li>
+          <ul>
+            <li>sys.databases que devuelve un registro por cada base de datos</li>
+            <li>sys.database_files que devuelve un registro por cada archivo de una base de datos. </li>
+          </ul>
+          <li>Objetos: Por ejemplo:</li>
+          <ul>
+            <li>sys.tables que devuelve un registro por cada tabla de una base de datos.</li>
+            <li>sys.views que devuelve un registro por cada vista de una base de datos.</li>
+            <li>sys.columns que devuelve un registro por cada columna de un objeto.</li>
+          </ul>
+          <li>Seguridad: Por ejemplo: </li>
+          <ul>
+            <li>sys.database_permissions que devuelve un registro por cada permiso definido en una base de datos. </li>
+            <li>sys.database_role_member que devuelve un registro por cada miembro de un rol de una base de datos.</li>
+          </ul>
+        </ul>        <h2 class="normal">FUNCIONES DEL SISTEMA</h2>
+        <h3>Devuelven información acerca de la base de datos y de los objetos de la misma. Solo se mencionan algunas de
+          ellas: </h3>        <h2 class="normal">DB_ID</h2>
+        <h3>Devuelve el número de identificación (Id.) de esa base de datos.
+          SELECT DB_ID('master') Devuelve 1
+        </h3>
+
+        <h2 class="normal">DB_NAME</h2>
+        <h3>Devuelve el nombre de la base de datos.
+          SELECT DB_NAME(1) Devuelve master
+        </h3>        <h2 class="normal">FILE_ID</h2>
+        <h3>Devuelve el número de identificación del archivo (Id.) del nombre de archivo lógico dado de la base de datos
+          actual.
+          SELECT FILE_ID('AdventureWorks_Data') Devuelve 1</h3>
+
+        <h2 class="normal">FILE_NAME</h2>
+        <h3>Devuelve el nombre del archivo lógico dado de la base de datos actual.
+          SELECT FILE_NAME(1) Devuelve AdventureWorks_Data
+        </h3>        <h2 class="normal">Procedimientos Almacenados de Sistema
+        </h2>
+        <h3>
+          Estos son algunos de los procedimientos almacenados de sistema que permiten consultar información sobre base
+          de datos:
+          Sp_Databases: Lista las bases de datos disponibles de un Server
+          Sp_Databases
+        </h3>        <h2 class="normal">Sp_HelpDB</h2>
+        <h2 class="normal">Información sobre las bases de datos de un servidor </h2>
+        <h2 class="normal">Sp_Help</h2>
+        <h2 class="normal">Presenta información acerca de un objeto de base de datos(cualquier objeto de la vista de compatibilidad
+          sys.sysobjects), un tipo de datos definido por el usuario o un tipo de datos. Puede ejecutarse sin parámetros,
+          entonces muestra la información sobre todos los objetos o puede pasarse como parámetro el nombre del objeto a
+          consultar.
+        </h2>        <h2 class="h2Centrado">GRUPOS DE ARCHIVOS </h2>
+        <h3>Las bases de datos de SQL Server utilizan tres tipos de archivos:
+          <h2>Archivos de datos principales:</h2>
+           <h3>
+            Es el punto de partida de la base de datos y apunta a los otros archivos de la
+            base de datos. Cada base de datos tiene un archivo de datos principal. La extensión recomendada para los
+            nombres de archivos de datos principales es .mdf.
+        </h3>
+        </h3>        <h2 class="normal">Archivos de datos secundarios:</h2>
+        <h3>son todos los archivos de datos menos el archivo de datos principal.Puede que algunas bases de datos no
+          tengan archivos de datos secundarios, mientras que otras pueden tener varios archivos de datos secundarios. La
+          extensión de nombre de archivo recomendada para los archivos de datos secundarios es .ndf. </h3>        <h2 class="normal">Archivos de registro:</h2>
+        <h3>almacenan toda la información de registroque se utiliza para recuperar la base de datos. Como mínimo, tiene
+          que haber un archivo de registro por cada base de datos, aunque puede haber varios. La extensión de nombre de
+          archivo recomendada para los archivos de registro es .ldf. </h3>
+        <h3>SQL Server no exige las extensiones de nombre de archivo .mdf, .ndf y .ldf, pero estas extensiones ayudan a
+          identificar las distintas clases de archivos y su uso.</h3>        <h2 class="normal">ESQUEMAS (SCHEMAS)</h2>
+        <h3>Definición:
+          Es un espacio de nombres (namespace) distintoque existe de forma independientemente del usuario de base de
+          datos que lo creó. Es un contenedor de objetos. Cualquier usuario puede ser propietario de un esquema, y esta
+          propiedad es transferible. Todas las bases de datos contienen un esquema llamado dbo. Es el esquema
+          predeterminado para todos los usuarios cuando no se define explícitamente el esquema.
+
+          Ejemplo
+
+          CREATE SCHEMA Ventas
+        </h3>        <h2 class="h2Centrado">Ventajas</h2>
+        <ul>
+          <li>Mayor flexibilidad para organizar la base de datosusando nombres de espacio, ya que de esta manera los
+            objetos no dependen del usuario que lo creo.</li>
+          <li>Manejo de permisos mejorada, ya que los permisos pueden ser asignados a los esquemas y no directamente a
+            cada objeto. </li>
+          <li>Al dar de baja un usuario no es necesario renombrar los objetos que le pertenecían. </li>
+        </ul>        <h2 class="h2Centrado">Instantáneas de Base de Datos</h2>
+        <ul>
+          <li>Es una vista estática de sólo lecturade una base de datos denominada base de datos de origen </li>
+          <li>Se mantiene hasta que el propietario de la base de datos la quita explícitamente.</li>
+          <li>Deben residir en la misma instancia de servidor que la base de datos </li>
+          <li>Se pueden utilizar para crear informes. Además, en el caso de que se produzca un error de usuario en una
+            base de datos de origen, ésta se puede revertir al estado en que se encontraba cuando se creó la
+            instantánea. </li>
+        </ul>        
+        <h2 class="normal">Tipos de restricciones</h2>
+        <ul>
+          <li>PRIMARY KEY</li>
+          <li>UNIQUE</li>
+          <li>FOREIGN KEY</li>
+          <li>DEFAULT</li>
+
+        </ul>
+      </section>
+  </section>
+
+  <!--INDICES-->
+  <section id="Indices">
+    <h2>Sección 3</h2>
+    <p>Contenido de la sección 3.</p>
+    <h2 class="h2Centrado">Indices</h2>
+<ul>
+      <li>Facilitan la obtención de información de una tabla.Una tabla se indexa por un campo (o varios).</li>
+      <li>Posibilita el acceso directo y rápido haciendo más eficiente las búsquedas. Sin índice, SQL Server debe
+        recorrer secuencialmente toda la tabla para encontrar un registro.</li>
+      <li>Acelera la recuperación de información. </li>
+      <li>Optimiza el acceso a los datos, mejora el rendimiento acelerando las consultas y otras operaciones. </li>
+
+    </ul>    <h2 class="normal">SQL Server accede a los datos de dos maneras:</h2>
+    <ol>
+      <li>recorriendo las tablas;comenzando el principio y extrayendo los registros que cumplen las condiciones de la
+        consulta.</li>
+      <li>empleando índices; recorriendo la estructura de árbol del índice para localizar los registros y extrayendo los
+        que cumplen las condiciones de la consulta.</li>
+    </ol>
+    <h3>
+      La desventaja es que consume espacio en disco y genera costo de mantenimiento (tiempo y recursos).
+      <br>
+      Los índices más adecuados son aquellos creados con campos que contienen valores únicos.
+      <br>
+      Es importante identificar el o los campos por los que sería útil crear un índice, aquellos campos por los cuales
+      se realizan búsqueda con frecuencia: claves primarias, claves externas o campos que combinan tablas.
+      <br>
+      No se recomienda crear índices por campos que no se usan con frecuencia en consultas o no contienen valores
+      únicos.
+    </h3>
+    <h3>SQL Server permite crear dos tipos de índices: 1) agrupados y 2) no agrupados.</h3>
+
+    <ol>
+      <li>Un INDICE AGRUPADO es similar a una guía telefónica, los registros con el mismo valor de campo se agrupan
+        juntos. Determina la secuencia de almacenamiento de los registros en una tabla.Se utilizan para campos por los
+        que se realizan búsquedas con frecuencia o se accede siguiendo un orden. Una tabla sólo puede tener UN índice
+        agrupado. El tamaño medio de un índice agrupado es aproximadamente el 5% del tamaño de la tabla.</li>
+      <li>Un INDICE NO AGRUPADO es como el índice de un libro, los datos se almacenan en un lugar diferente al del
+        índice, los punteros indican el lugar de almacenamiento de los elementos indizados en la tabla. Un índice no
+        agrupado se emplea cuando se realizan distintos tipos de búsquedas frecuentemente, con campos en los que los
+        datos son únicos.Una tabla puede tener hasta 249 índices no agrupados.</li>
+
+    </ol>
+
+    <ul>
+      <li>Si no se especifica un tipo de índice, de modo predeterminado será no agrupado.</li>
+      <li>Los campos de tipo text, ntext e image no se pueden indizar.</li>
+      <li>Es recomendable crear los índices agrupados antes que los no agrupados, porque los primeros modifican el orden
+        físico de los registros, ordenándolos secuencialmente.</li>
+      <li>La diferencia básica entre índices agrupados y no agrupados es que los registros de un índice agrupado están
+        ordenados y almacenados de forma secuencial en función de su clave. </li>
+      SQL Server crea automaticamente índices cuando se crea una restricción "primary key" o "unique" en una tabla.Es
+      posible crear índices en las vistas.
+      <li>Crea un índice en una tabla. se permiten valores duplicados:</li>
+      <h3>CREATE INDEX index_name <br>
+
+        ON table_name (column1, column2, ...);
+      </h3>
+      <li>Crea un índice único en una tabla. Los valores duplicados no están permitidos:</li>
+      <li>Crea un índice único en una tabla. Los valores duplicados no están permitidos:
+      </li>
+      <h3>CREATE UNIQUE INDEX index_name
+        ON table_name (column1, column2, ...);
+      </h3>
+    </ul>
+    <li>Create a single nonclustered index
+    </li>
+    <h3>
+      CREATE UNIQUE NONCLUSTERED INDEX IX_NC_PresidentNumber
+      ON dbo.Presidents (PresidentNumber) -- specify table and column name
+
+    </h3>
+  </section> <!--FIN DE INDICES-->
+
+  <!--VISTAS-->
+  <section id="Vistas">
+    <h2>Sección 4</h2>
+    <p>Contenido de la sección 4.</p>
+<h2 class="h2Centrado">Vistas(Views)</h2>  
+<h3>
+  Una vista es una consulta que se presenta como una tabla (virtual) a partir de un conjunto de tablas en una base de datos relacional. Las vistas tienen la misma estructura que una tabla: filas y columnas. La única diferencia es que sólo se almacena de ellas la definición, no los datos.
+</h3>
+<ul>
+  <li>Una vista es una alternativa para mostrar datos de varias tablas. </li>
+  <li>Una vista es como una tabla virtual que almacena una consulta. 
+</li>
+  <li>Los datos accesibles a través de la vista no están almacenados en la base de datos como un objeto
+</li>
+<li>Una vista almacena una consulta como un objeto para utilizarse posteriormente. 
+</li>
+<li>Las tablas consultadas en una vista se llaman tablas base. </li>
+<li>En general, se puede dar un nombre a cualquier consulta y almacenarla como una vista. 
+</li>
+</ul>
+
+<h2 class="h2Centrado">Las vistas Permiten</h2>
+
+<ol>
+  <li>Ocultar información: permitiendo el acceso a algunos datos y manteniendo oculto el resto de la información que no se incluye en la vista. El usuario opera con los datos de una vista como si se tratara de una tabla, pudiendo modificar tales datos.</li>
+  <li>Simplificar la administración de los permisos de usuario: se pueden dar al usuario permisos para que solamente pueda acceder a los datos a través de vistas, en lugar de concederle permisos para acceder a ciertos campos, así se protegen las tablas base de cambios en su estructura.</li>
+</ol>
+
+<ul>
+  <li>Primer ejemplo de vistas
+</li>
+  <li>Ventajas de las vistas</li>
+  <li>Definición de vistas
+</li>
+  <li>Modificación de datos mediante vistas
+</li>
+  <li>Optimización del rendimiento mediante vistas
+</li>
+  <li>Práctica: Implementación de vistas
+</li>  
+</ul>
+<h2 >VENTAJAS DE VISTAS </h2>
+
+<ul>
+  <li>Centrar el interés en los datos de los usuarios</li>
+  <ul>
+    <li>Centrarse sólo en los datos importantes o adecuados.
+</li>
+    <li>Limitar el acceso a los datos confidenciales
+</li> 
+  </ul>
+  <li>Enmascarar la complejidad de la base de datos</li>
+  <ul>
+    <li>Ocultar el diseño de la base de datos. 
+</li>
+    <li>Simplificar las consultas complejas, incluyendo las consultas distribuidas a datos heterogéneos
+</li>
+  </ul>
+  <li>Simplificar la administración de los permisos de usuario
+</li>
+  <li>Mejorar el rendimiento ( con indices )
+</li>
+  <li>Organizar los datos para exportarse a otras aplicaciones
+</li>
+  
+</ul>
+
+<h2>DEFINICION DE VISTAS </h2>
+<ul>
+  <li>CREACIÓN DE VISTAS
+</li>
+  <li>EJEMPLO: VISTA DE TABLAS COMBINADAS
+</li>
+  <li>MODIFICACIÓN Y ELIMINACIÓN DE VISTAS</li>
+  <li>EVITAR LA INTERRUPCIÓN DE LAS CADENAS DE PERTENENCIA</li>
+  <li>UBICACIÓN DE LA INFORMACIÓN DE DEFINICIÓN DE VISTAS
+</li>
+  <li>OCULTACIÓN DE LA DEFINICIÓN DE LAS VISTAS
+</li>
+</ul>
+
+<h2>Creacion de vistas</h2>
+<ul>
+  <li>CREACIÓN DE UNA VISTA</li>
+  <h3>CASI CUALQUIER CONSULTA DE LOS EJERCICIOS ANTERIORES, 
+<br>
+PUEDE TRANSFORMARSE EN UNA VISTA
+</h3>
+<li>RESTRICCIONES EN LAS DEFINICIONES DE VISTAS
+No se puede incluir la cláusula ORDER BY
+No se puede incluir la palabra clave INTO
+</li>
+</ul>
+
+<h3>
+  EJECUTAR UNA VISTA
+
+SELECT * FROM PedidosALFKI
+
+VER RESULTADOS
+</h3>
+
+<h2>Modificacion de vistas</h2>
+<h2>Alteración de vistas</h2>
+<ul>
+  <li>Conserva los permisos asignados
+  </li>
+  <li>Hace que la instrucción SELECT y las opciones reemplacen la definición existente</ul>
+
+</ul>
+<h2>ELIMINACION DE VISTAS
+</h2>
+<h3>DROP VIEW dbo.(vista)
+</h3>
+<h2>MODIFICACION  DE DATOS EN LAS VISTAS
+</h2>
+<ul>
+  <li>No pueden afectar a más de una tabla subyacente.
+</li>
+  <li>No pueden afectar a ciertas columnas.
+</li>
+  <li>Pueden provocar errores si afectan a columnas a las que la vista no hace referencia </li>
+  <li>Consideraciones acerca del rendimiento
+</li>
+  <li>Uso de vistas para dividir datos
+</li>
+</ul>
+
+<h2>OPTIMIZACIÓN DEL RENDIMIENTO MEDIANTE VISTAS
+</h2>
+<ul>
+  <li>Consideraciones acerca del rendimiento
+</li>
+  <li>Uso de vistas para dividir datos
+</li>
+</ul>
+
+<h2>OTORGAR PERMISOS SOBRE LAS VISTAS</h2>
+<pre>
+  GRANT SELECT ON Vista 
+TO user_name
+
+GRANT SELECT ON PedidosAlfki
+TO ‘Vendedores’
+
+</pre>
+</section><!--FIN DE VISTAS-->
+
+  <!-- Botón flotante -->
+  <div class="floating-btn">
+    <button class="main-btn" onclick="toggleSectionButtons()">🎨</button>
+    <div class="section-buttons" id="sectionButtons">
+      <label for="">Fondos:</label>
+      <button class="section-btn" onclick="chooseColor('RepasoBDD')">BDD Repaso</button>
+      <button class="section-btn" onclick="chooseColor('FuncionesAvanzadas')">Funciones avanzadas</button>
+      <button class="section-btn" onclick="chooseColor('CrearBDD')">CrearBDD</button>
+      <button class="section-btn" onclick="chooseColor('Indices')">INDICES</button>
+      <button class="section-btn" onclick="chooseColor('Vistas')">VISTAS</button>
+
+    </div>
+    <input type="color" id="colorPicker" class="color-picker" onchange="applyColor()" />
+  </div>
+
+  <script>
+    const sectionButtons = document.getElementById('sectionButtons');
+    const colorPicker = document.getElementById('colorPicker');
+    let currentSectionId = null;
+
+    function toggleSectionButtons() {
+      sectionButtons.style.display = sectionButtons.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function chooseColor(sectionId) {
+      currentSectionId = sectionId;
+      colorPicker.click(); // abre el selector de color
+    }
+
+    function applyColor() {
+      const color = colorPicker.value;
+      if (currentSectionId) {
+        const section = document.getElementById(currentSectionId);
+        section.style.backgroundColor = color;
+        // Guardar en localStorage
+        localStorage.setItem(`bgColor-${currentSectionId}`, color);
+      }
+    }
+
+    // Al cargar la página, restaurar colores guardados
+    window.onload = () => {
+      ['RepasoBDD', 'FuncionesAvanzadas', 'CrearBDD','Indices','Vistas'].forEach(id => {
+        const savedColor = localStorage.getItem(`bgColor-${id}`);
+        if (savedColor) {
+          document.getElementById(id).style.backgroundColor = savedColor;
+        }
+      });
+    };
+
+  </script>
+
+  
+</body>
+</html>
